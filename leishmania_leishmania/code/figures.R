@@ -307,21 +307,21 @@ vianna_shp <- st_read('/Users/carolineglidden/Desktop/reservoir hosts - FINAL/le
 vianna_shp_clipped <-st_intersection(st_make_valid(vianna_shp), america_shape)
 
 #####get host shape files
-top_hosts <- c("Oryzomys megacephalus", "Calomys callosus", "Dasypus novemcinctus", "Leopardus wiedii")
-#ranges <- st_read("/Users/carolineglidden/Desktop/reservoir host - DRAFTS/habitattypes/cleaning feature collection/leishmania_animals_all")
-#^^make surenames are converted
+top_hosts <- c("Hylaeamys megacephalus", "Calomys callosus", "Dasypus novemcinctus", "Leopardus wiedii")
+ranges <- st_read("/Users/carolineglidden/Desktop/reservoir host - DRAFTS/habitattypes/cleaning feature collection/leishmania_animals_all")
+#^^make sure names are converted
 top_host_shp <- ranges[ranges$BINOMIAL %in% top_hosts, ]
 
 top_host_shp_v2 <- foreach(i = unique(top_host_shp$BINOMIAL), #make sure there is only one polygon per species
-                        .packages = c("sf", "tidyverse", "magrittr", "raster", "readxl"),
-                        .combine = "rbind") %do% {
-                          
-                          SHP <- top_host_shp %>%
-                            filter(BINOMIAL == i) %>%
-                            group_by(BINOMIAL) %>%
-                            summarise()
-                          
-                        }
+                           .packages = c("sf", "tidyverse", "magrittr", "raster", "readxl"),
+                           .combine = "rbind") %do% {
+                             
+                             SHP <- top_host_shp %>%
+                               filter(BINOMIAL == i) %>%
+                               group_by(BINOMIAL) %>%
+                               summarise()
+                             
+                           }
 
 ####vianna figures
 library(cartomisc)
@@ -329,28 +329,28 @@ gplot_vianna_known<- gplot_data(vianna_known); gplot_vianna_known$value[gplot_vi
 gplot_vianna_predicted <- gplot_data(vianna_new); gplot_vianna_predicted$value[gplot_vianna_predicted$value == 0] <- NA
 
 map_a <- ggplot() +
-  ggtitle(expression(~bold(a.)~~italic(L. (Vianna))~'known')) +
+  ggtitle(expression(~bold(a.)~~italic(L. (Viannia))~'known')) +
   geom_tile(data = gplot_vianna_known, 
             aes(x = x, y = y, fill = value)) +
-  scale_fill_gradient(name = "vianna richness", low = "lightblue", high = "darkblue", na.value = "white") +
+  scale_fill_viridis(name = "no. of viannia hosts", option = "C", na.value = "white") +
   geom_sf(data = america_shape, fill = "NA",
           colour = "black", size = 0.2) +
   geom_sf(data = vianna_shp_clipped, fill = NA,
-          colour = "salmon", size = 1) +
+          colour = "grey", size = 1.5) +
   theme_void() +
   theme(legend.position = c(0.2,0.2))
 
 map_b <- ggplot() +
-  ggtitle(expression(~bold(b.)~~italic(L. (Vianna))~'predicted')) +
+  ggtitle(expression(~bold(b.)~~italic(L. (Viannia))~'predicted')) +
   geom_tile(data = gplot_vianna_predicted, 
             aes(x = x, y = y, fill = value)) +
-  scale_fill_gradient(low = "lightblue", high = "darkblue", na.value = "white") +
+  scale_fill_viridis(option = "C", na.value = "white") +
   geom_sf(data = america_shape, fill = "NA",
           colour = "black", size = 0.2) +
   geom_sf(data = top_host_shp_v2[3,], fill = NA,
-          colour = "palegreen", size = 1) +
+          colour = "darkseagreen1", size = 1) +
   geom_sf(data = top_host_shp_v2[4,], fill = NA,
-          colour = "thistle1", size = 1) +
+          colour = "darkgreen", size = 1) +
   theme_void() +
   theme(legend.position = "none")
 
@@ -364,11 +364,11 @@ map_c <- ggplot() +
   ggtitle(expression(~bold(c.)~~italic(L. (Leishmania))~'known')) +
   geom_tile(data = gplot_leish_known, 
             aes(x = x, y = y, fill = value)) +
-  scale_fill_gradient(name = "leish richness", low = "lightblue", high = "darkblue", na.value = "white") +
+  scale_fill_viridis(name = "no. leish hosts", option = "C", na.value = "white") +
   geom_sf(data = america_shape, fill = "NA",
           colour = "black", size = 0.2) +
   geom_sf(data = leish_shp_clipped, fill = NA,
-          colour = "salmon", size = 1) +
+          colour = "grey", size = 1.5) +
   theme_void() +
   theme(legend.position = c(0.2,0.3))
 
@@ -376,13 +376,13 @@ map_d <- ggplot() +
   ggtitle(expression(~bold(d.)~~italic(L. (Leishmania))~'predicted')) +
   geom_tile(data = gplot_leish_predicted, 
             aes(x = x, y = y, fill = value)) +
-  scale_fill_gradient(low = "lightblue", high = "darkblue", na.value = "white") +
+  scale_fill_viridis(option = "C", na.value = "white") +
   geom_sf(data = america_shape, fill = "NA",
           colour = "black", size = 0.2) +
   geom_sf(data = top_host_shp_v2[1,], fill = NA,
-          colour = "thistle1", size = 1) +
+          colour = "lightblue", size = 1) +
   geom_sf(data = top_host_shp_v2[2,], fill = NA,
-          colour = "palegreen", size = 1) +
+          colour = "blue", size = 1) +
   theme_void() +
   theme(legend.position = "none")
 
