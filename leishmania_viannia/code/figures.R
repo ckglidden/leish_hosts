@@ -9,18 +9,18 @@ library(sf)
 ##summary 1: model performance
 ###########
 
-nested_auc <- read.csv('/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_vianna/output/nested cv auc vianna july 8 2022.csv')
+nested_auc <- read.csv('/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_viannia/output/nested cv auc viannia july 8 2022.csv')
 Rmisc::CI(nested_auc$x, 0.95)
 #upper      mean     lower 
 #0.8561613 0.8468799 0.8375984
 
-target_shuffle <- read.csv('/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_vianna/output/nested cv target shuffled auc vianna july 8 2022.csv')
+target_shuffle <- read.csv('/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_viannia/output/nested cv target shuffled auc viannia july 8 2022.csv')
 #t.test(target_shuffle$x, mu=0.5)
 Rmisc::CI(target_shuffle$x, 0.95)
 #upper      mean     lower 
 #0.5506404 0.5406717 0.5307030  
 
-in_sample <- read.csv("/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_vianna/output/in sample auc vianna july 8 2022.csv")
+in_sample <- read.csv("/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_viannia/output/in sample auc viannia july 8 2022.csv")
 Rmisc::CI(in_sample$x, 0.95)
 #upper      mean     lower 
 #0.9707527 0.9701160 0.9694793 
@@ -32,43 +32,43 @@ Rmisc::CI(in_sample$x, 0.95)
 colors0 <- nationalparkcolors::park_palette("Badlands", 3)
 colors <- c(colors0[c(1,3,2)], "grey")
 
-mean_importance_vianna <- read.csv("/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_vianna/output/mean sum shap scores leishmania july 21.csv")
-imp_df_vianna <- subset(mean_importance_vianna, mean_shap_score.lower.q.5. > 0)
+mean_importance_viannia <- read.csv("/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_viannia/output/mean sum shap scores leishmania july 21.csv")
+imp_df_viannia <- subset(mean_importance_viannia, mean_shap_score.lower.q.5. > 0)
 
-imp_df_vianna$trait_type <- c("biogeography", "life-history", "biogeography", "biogeography", "phylogenetic distance", "life-history", "study effort")
+imp_df_viannia$trait_type <- c("biogeography", "life-history", "biogeography", "biogeography", "phylogenetic distance", "life-history", "study effort")
 
-importance_plot_vianna <- ggplot(imp_df_vianna, aes(x = reorder(Feature, mean_shap_score.lower.q.5.), y = mean_shap_score.mean, color=trait_type)) +
+importance_plot_viannia <- ggplot(imp_df_viannia, aes(x = reorder(Feature, mean_shap_score.lower.q.5.), y = mean_shap_score.mean, color=trait_type)) +
   geom_point(size = 3) + xlab('feature') + ylab('mean |SHAP value|') + 
-  ggtitle(expression(~bold(a.)~" "~italic(L. (Vianna))~" ")) +
+  ggtitle(expression(~bold(a.)~" "~italic(L. (viannia))~" ")) +
   geom_errorbar(aes(ymin = mean_shap_score.lower.q.5., ymax = mean_shap_score.upper.q.95.), position = "dodge", width = 0.4, size = 1.5) +
   scale_color_manual(values=colors, 'trait type') + 
   coord_flip() +
   theme_bw(base_size = 12) +
   theme(legend.position = c(0.9, 0.1),
-        legend.key=element_blank()) + scale_x_discrete(breaks=imp_df_vianna$Feature, 
+        legend.key=element_blank()) + scale_x_discrete(breaks=imp_df_viannia$Feature, 
                                                        labels=c("tmp warmest qt", "gestation len", "min longitude", 
                                                                 "range % land cvr", "phylo distance", "pop density", "study effort"))
                                                               
 
-#ggsave("/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_vianna/output/plots/trait_importance_performance.pdf", importance_plot_vianna, dpi=600)
-#ggsave("/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_vianna/output/plots/trait_importance_performance.png", importance_plot_vianna, dpi=600)
+#ggsave("/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_viannia/output/plots/trait_importance_performance.pdf", importance_plot_viannia, dpi=600)
+#ggsave("/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_viannia/output/plots/trait_importance_performance.png", importance_plot_viannia, dpi=600)
 
 
 ###########
 ##figure 3: shap pdps
 ###########
 
-pd_df_iter_vianna <- read.csv('/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_vianna/output/shapley dependence vianna july 21 2022.csv'); names(pd_df_iter_vianna)[2] <- 'Feature'
-pd_df_iter_vianna$row_code <- seq(1, nrow(pd_df_iter_vianna), by = 1)
+pd_df_iter_viannia <- read.csv('/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_viannia/output/shapley dependence viannia july 21 2022.csv'); names(pd_df_iter_viannia)[2] <- 'Feature'
+pd_df_iter_viannia$row_code <- seq(1, nrow(pd_df_iter_viannia), by = 1)
 
 #split df into value & shap value; make each of them in long format; merge by feature and iteration
-feature_value <- pd_df_iter_vianna[,c(4:58,114, 115)] %>%
+feature_value <- pd_df_iter_viannia[,c(4:58,114, 115)] %>%
   tidyr::pivot_longer(cols = 1:55, #check this
                       names_to = "feature",
                       values_to = "value",
                       values_drop_na = FALSE)
 
-feature_shap <- pd_df_iter_vianna[,c(59:115)] %>%
+feature_shap <- pd_df_iter_viannia[,c(59:115)] %>%
   tidyr::pivot_longer(cols = 1:55, #check this
                       names_to = "feature",
                       values_to = "shap_val",
@@ -80,8 +80,8 @@ shap_pdp_df <- left_join(feature_value, feature_shap, by = c("feature","iter", "
 vars_to_plot <- c("GR_MinLong_dd", "mean_tree_cover","mean_crop_cover", "mean_urban_cover", "GestationLen_d", "bio10_temp_warmest_qt", "PopulationDensity_n.km2") #subset to significant variables
 
 shap_pdp_plot_df <- shap_pdp_df[shap_pdp_df$feature %in% vars_to_plot, ]
-names(imp_df_vianna)[2] <- "feature"
-trait_type_df <- imp_df_vianna[,c("feature", "trait_type")]
+names(imp_df_viannia)[2] <- "feature"
+trait_type_df <- imp_df_viannia[,c("feature", "trait_type")]
 trait_type_df <- rbind(trait_type_df, 
                        data.frame(feature = c("mean_tree_cover","mean_crop_cover", "mean_urban_cover"),
                                   trait_type = rep("biogeography", 3)))
@@ -104,9 +104,9 @@ trait_labeller <- function(variable,value){
   return(trait_names[value])
 }
 
-pdp_vianna <- ggplot(shap_pdp_plot_df, aes(x=value, y=shap_val, color=trait_type)) +
+pdp_viannia <- ggplot(shap_pdp_plot_df, aes(x=value, y=shap_val, color=trait_type)) +
   #geom_point() +
-  ggtitle(expression(~bold(a.)~" "~italic(L. (Vianna))~" ")) +
+  ggtitle(expression(~bold(a.)~" "~italic(L. (viannia))~" ")) +
   stat_smooth(aes(group=iter), color='lightgrey', method='loess', size=0.5, se=FALSE) + 
   stat_smooth(aes(), method='loess', size=2, se=FALSE) +
   scale_color_manual(values=colors[1:2], 'trait type') + #fix colors
@@ -116,62 +116,62 @@ pdp_vianna <- ggplot(shap_pdp_plot_df, aes(x=value, y=shap_val, color=trait_type
   ylab("Shapley score") +
   theme(legend.position = "none")
 
-ggsave("/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_vianna/output/plots/prob_pdps.pdf", pdp_vianna, dpi=600)
-ggsave("/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_vianna/output/plots/prob_pdps.png", pdp_vianna, dpi=600)
+ggsave("/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_viannia/output/plots/prob_pdps.pdf", pdp_viannia, dpi=600)
+ggsave("/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_viannia/output/plots/prob_pdps.png", pdp_viannia, dpi=600)
 
 
 ###########
 ##figure 4: host per order
 ###########
 
-summary_shap_predictions_vianna <- read.csv("/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_vianna/output/leishmania summary shap predictions july 21.csv")
+summary_shap_predictions_viannia <- read.csv("/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_viannia/output/leishmania summary shap predictions july 21.csv")
 
-abv_avg_vianna <- subset(summary_shap_predictions_vianna, shap_prediction.lower.q.5. > 0) #126 observations
-new_vianna <- subset(abv_avg_vianna, leish.infection == 0) #83 unrecognized hosts
+abv_avg_viannia <- subset(summary_shap_predictions_viannia, shap_prediction.lower.q.5. > 0) #126 observations
+new_viannia <- subset(abv_avg_viannia, leish.infection == 0) #83 unrecognized hosts
 
 get_orders <- readRDS('/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_leishmania/cleaned data/analysis data/total data.rds')
 orders <- unique(get_orders[,c("MSW05_Binomial", "MSW05_Order")])
 
-new_vianna <- left_join(new_vianna, orders, by = "MSW05_Binomial")
-tbl_vianna <- as.data.frame(table(new_vianna$MSW05_Order)); names(tbl_vianna) <- c("order", "freq")
-tbl_vianna <- rbind(tbl_vianna, data.frame(order = "Perissodactyla", freq = 0))
-tbl_vianna$subgenera <- rep("vianna", 11)
-tbl_vianna$order <- factor(tbl_vianna$order, levels=c("Artiodactyla", "Carnivora", "Chiroptera", "Cingulata", "Didelphimorphia",
+new_viannia <- left_join(new_viannia, orders, by = "MSW05_Binomial")
+tbl_viannia <- as.data.frame(table(new_viannia$MSW05_Order)); names(tbl_viannia) <- c("order", "freq")
+tbl_viannia <- rbind(tbl_viannia, data.frame(order = "Perissodactyla", freq = 0))
+tbl_viannia$subgenera <- rep("viannia", 11)
+tbl_viannia$order <- factor(tbl_viannia$order, levels=c("Artiodactyla", "Carnivora", "Chiroptera", "Cingulata", "Didelphimorphia",
                                                       "Lagomorpha", "Perissodactyla", "Pilosa",          
                                                       "Primates", "Rodentia" , "Soricomorpha"))
-tbl_vianna$status <- rep("new", 11)
+tbl_viannia$status <- rep("new", 11)
 
-#old vianna
-old_vianna <- subset(summary_shap_predictions_vianna, leish.infection == 1)
-old_vianna <- left_join(old_vianna, orders, by = "MSW05_Binomial")
-tbl_old_vianna <- as.data.frame(table(old_vianna$MSW05_Order)); names(tbl_old_vianna) <- c("order", "freq")
-tbl_old_vianna$subgenera <- rep("vianna", 9)
-tbl_old_vianna$status <- rep("old", 9)
+#old viannia
+old_viannia <- subset(summary_shap_predictions_viannia, leish.infection == 1)
+old_viannia <- left_join(old_viannia, orders, by = "MSW05_Binomial")
+tbl_old_viannia <- as.data.frame(table(old_viannia$MSW05_Order)); names(tbl_old_viannia) <- c("order", "freq")
+tbl_old_viannia$subgenera <- rep("viannia", 9)
+tbl_old_viannia$status <- rep("old", 9)
 
-tbl_all_vianna <- rbind(tbl_vianna, tbl_old_vianna)
+tbl_all_viannia <- rbind(tbl_viannia, tbl_old_viannia)
 
 # Barplot
 order_colors <- c(nationalparkcolors::park_palette("GeneralGrant", 8), nationalparkcolors::park_palette("Saguaro", 3))
 
-vianna_ab_bar <- ggplot(tbl_all_vianna, aes(x=order, y=freq, fill = order, color = as.factor(status))) +
+viannia_ab_bar <- ggplot(tbl_all_viannia, aes(x=order, y=freq, fill = order, color = as.factor(status))) +
   scale_fill_manual(values = order_colors) +
   scale_color_manual(values = c("white", "white")) +
   ylim(0, 75) +
-  ggtitle("a. L. (Vianna)") +
+  ggtitle("a. L. (viannia)") +
   ylab("number of species") +
   geom_bar(stat = "identity") + 
   theme_classic(base_size = 12) +
   theme(legend.position="none",
         axis.text.x = element_text(angle = 60, vjust = 1, hjust=1)) 
 
-vianna_rel_bar <- ggplot(tbl_vianna, aes(x=subgenera, y=freq, fill = order)) +
+viannia_rel_bar <- ggplot(tbl_viannia, aes(x=subgenera, y=freq, fill = order)) +
   scale_fill_manual(values = order_colors) +
   ggtitle("b.") +
   ylab("proportion of species") +
   geom_bar(position="fill", stat="identity") + 
   theme_classic(base_size = 12)
 
-#gridExtra::grid.arrange(vianna_ab_bar, vianna_rel_bar, ncol = 2)
+#gridExtra::grid.arrange(viannia_ab_bar, viannia_rel_bar, ncol = 2)
 
 
 
@@ -196,8 +196,8 @@ for(i in 1:length(ntl)){
   ranges$BINOMIAL[ranges$BINOMIAL==ntl[i]] <- pantheria[i]
 }
 
-predicted_host_ranges_vianna_v0 <- ranges[ranges$BINOMIAL %in% new_vianna$MSW05_Binomial, ]
-known_host_ranges_vianna_v0 <- ranges[ranges$BINOMIAL %in% old_vianna$MSW05_Binomial, ]
+predicted_host_ranges_viannia_v0 <- ranges[ranges$BINOMIAL %in% new_viannia$MSW05_Binomial, ]
+known_host_ranges_viannia_v0 <- ranges[ranges$BINOMIAL %in% old_viannia$MSW05_Binomial, ]
 
 #r <- raster(as(shape, "Spatial"), ncols = 1000, nrows = 1000)
 #rr <- rasterize(as(shape, "Spatial"), r, res=1000000, getCover = TRUE, progress = "text"); box <- extent(rr)
@@ -205,44 +205,44 @@ known_host_ranges_vianna_v0 <- ranges[ranges$BINOMIAL %in% old_vianna$MSW05_Bino
 ##crop rasters to Latin America, reduce shapefiles to one shapefile per species, count number of shapefile per grid cell, save for future plotting
 
 #predicted hosts
-predicted_host_ranges_vianna_v1 <- st_crop(predicted_host_ranges_vianna_v0, box)
-predicted_host_ranges_vianna_v2 <- foreach(i = new_vianna$MSW05_Binomial, #make sure there is only one polygon per species
+predicted_host_ranges_viannia_v1 <- st_crop(predicted_host_ranges_viannia_v0, box)
+predicted_host_ranges_viannia_v2 <- foreach(i = new_viannia$MSW05_Binomial, #make sure there is only one polygon per species
                                                  .packages = c("sf", "tidyverse", "magrittr", "raster", "readxl"),
                                                  .combine = "rbind") %do% {
   
-  SHP <- predicted_host_ranges_vianna_v1 %>%
+  SHP <- predicted_host_ranges_viannia_v1 %>%
     filter(BINOMIAL == i) %>%
     group_by(BINOMIAL) %>%
     summarise()
                                                  }
 
-predicted_host_ranges_vianna_v2 = as(predicted_host_ranges_vianna_v2, "Spatial")
-predicted_vianna_raster <- RangeRichness(predicted_host_ranges_vianna_v2, res = 0.08)
-writeRaster(predicted_vianna_raster, '/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_vianna/output/plots/vianna_predicted_host_richness.tif', format="GTiff", overwrite=TRUE)
+predicted_host_ranges_viannia_v2 = as(predicted_host_ranges_viannia_v2, "Spatial")
+predicted_viannia_raster <- RangeRichness(predicted_host_ranges_viannia_v2, res = 0.08)
+writeRaster(predicted_viannia_raster, '/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_viannia/output/plots/viannia_predicted_host_richness.tif', format="GTiff", overwrite=TRUE)
 
 ##repeat for known hosts
 #sf::sf_use_s2(FALSE)
-known_host_ranges_vianna_v1 <- st_crop(known_host_ranges_vianna_v0, box)
-known_host_ranges_vianna_v2 <- foreach(i = old_vianna$MSW05_Binomial, #make sure there is only one polygon per species
+known_host_ranges_viannia_v1 <- st_crop(known_host_ranges_viannia_v0, box)
+known_host_ranges_viannia_v2 <- foreach(i = old_viannia$MSW05_Binomial, #make sure there is only one polygon per species
                                            .packages = c("sf", "tidyverse", "magrittr", "raster", "readxl"),
                                            .combine = "rbind") %do% {
                                              
-                                             SHP <- known_host_ranges_vianna_v1 %>%
+                                             SHP <- known_host_ranges_viannia_v1 %>%
                                                filter(BINOMIAL == i) %>%
                                                group_by(BINOMIAL) %>%
                                                summarise()
                                              
                                            }
 
-known_host_ranges_vianna_v2 = as(known_host_ranges_vianna_v2, "Spatial")
-known_vianna_raster <- RangeRichness(known_host_ranges_vianna_v2, res = 0.08)
-writeRaster(known_vianna_raster, '/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_vianna/output/plots/vianna_known_host_richness.tif', format="GTiff", overwrite=TRUE)
+known_host_ranges_viannia_v2 = as(known_host_ranges_viannia_v2, "Spatial")
+known_viannia_raster <- RangeRichness(known_host_ranges_viannia_v2, res = 0.08)
+writeRaster(known_viannia_raster, '/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_viannia/output/plots/viannia_known_host_richness.tif', format="GTiff", overwrite=TRUE)
 
 
 
 
 #############PCoA supplemental figure
-phylo_importance <- read.csv("/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_vianna/output/shapley variable importance vianna july 21 2022.csv")
+phylo_importance <- read.csv("/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_viannia/output/shapley variable importance viannia july 21 2022.csv")
 phylo_importance <- phylo_importance[phylo_importance$Feature %in% c("V1", "V2", "V3", "V4", "V5", "V6"), ]
 mean_phylo_importance <- aggregate(mean_shap_score ~ Feature, data = phylo_importance, 
                                    FUN = function(x) c(mean = mean(x),
@@ -254,12 +254,12 @@ mean_phylo_importance <- do.call(data.frame, mean_phylo_importance)
 
 phylo_dimensions_imp_plot <- ggplot(mean_phylo_importance, aes(x = reorder(Feature, mean_shap_score.lower.q.5.), y = mean_shap_score.mean)) +
   geom_point(size = 3) + xlab('PCoA dimension') + ylab('mean |SHAP value|') + 
-  #ggtitle(expression(~bold(a.)~" "~italic(L. (Vianna))~" ")) +
+  #ggtitle(expression(~bold(a.)~" "~italic(L. (viannia))~" ")) +
   geom_errorbar(aes(ymin = mean_shap_score.lower.q.5., ymax = mean_shap_score.upper.q.95.), position = "dodge", width = 0.4, size = 1.5) +
   #scale_color_manual(values=colors, 'trait type') + 
   coord_flip() +
   theme_bw(base_size = 12)
-ggsave("vianna_phylo_trait_imp.png", phylo_dimensions_imp_plot)
+ggsave("viannia_phylo_trait_imp.png", phylo_dimensions_imp_plot)
 
 pcoa_data <- readRDS("/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_leishmania/cleaned data/analysis data/total data.rds")
 
@@ -298,7 +298,7 @@ v6 <- ggplot(pcoa_data, aes(x=V6)) +
 #facet_wrap(vars(MSW05_Order), scales = "free")
 
 
-pcoa_pdp <- read.csv("/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_vianna/output/shapley dependence vianna july 21 2022.csv")
+pcoa_pdp <- read.csv("/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_viannia/output/shapley dependence viannia july 21 2022.csv")
 
 pcoa_pdp$row_code <- seq(1, nrow(pcoa_pdp), by = 1)
 
@@ -397,10 +397,10 @@ ggsave("pcoa_full_supplementary_figure.pdf", combined_pcoa)
 #####try plotting rasters again
 library(raster); library(rasterVis); library(ggplot2); library(viridis)
 
-vianna_predicted <- raster('/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_vianna/output/plots/predicted_host_richness.tif')
-vianna_predicted[vianna_predicted$predicted_host_richness == 0, ] <- NA
-vianna_known <- raster('/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_vianna/output/plots/known_host_richness.tif')
-vianna_known[vianna_known$known_host_richness == 0, ] <- NA
+viannia_predicted <- raster('/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_viannia/output/plots/predicted_host_richness.tif')
+viannia_predicted[viannia_predicted$predicted_host_richness == 0, ] <- NA
+viannia_known <- raster('/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_viannia/output/plots/known_host_richness.tif')
+viannia_known[viannia_known$known_host_richness == 0, ] <- NA
 
 leish_predicted <- raster('/Users/carolineglidden/Desktop/reservoir hosts - FINAL/leishmania_leishmania/output/plots/predicted_host_richness.tif')
 leish_predicted[leish_predicted$predicted_host_richness == 0, ] <- NA
@@ -408,11 +408,11 @@ leish_known <- raster('/Users/carolineglidden/Desktop/reservoir hosts - FINAL/le
 leish_known[leish_known$known_host_richness == 0, ] <- NA
 
 
-d <- gplot(vianna_predicted) + 
+d <- gplot(viannia_predicted) + 
   geom_tile(aes(fill = value))+
   ylim(-60, 50) +
   xlim(-130, -10) +
-  ggtitle("D. Vianna predicted") +
+  ggtitle("D. viannia predicted") +
   scale_fill_viridis(na.value="white") + #, limits = c(1, 24)) +
   theme_void() +
   theme(#legend.key.height = unit(0.5, 'cm'),
@@ -423,11 +423,11 @@ d <- gplot(vianna_predicted) +
         axis.text.y=element_blank(),
         plot.margin=unit(c(0.5,-2,0.5,0),"mm"))
 
-c <- gplot(vianna_known) + 
+c <- gplot(viannia_known) + 
   geom_tile(aes(fill = value)) +
   ylim(-60, 50) +
   xlim(-130, -10) + 
-  ggtitle("C. Vianna known") +
+  ggtitle("C. viannia known") +
   scale_fill_viridis(na.value="white") + #, limits = c(1, 46)) +
   theme_void() +
   theme(#legend.key.height = unit(0.5, 'cm'),

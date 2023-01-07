@@ -1,5 +1,5 @@
 ##### 
-##### title: BRT for identifying hosts likely to be exposed to parasites in the leishmania genus - dont use imputed data
+##### title: BRT for identifying hosts likely to be exposed to parasites in the leishmania genus
 ##### author: Caroline Glidden
 ##### version: 09/10/2021
 
@@ -30,7 +30,7 @@ analysis_data <- readRDS("../cleaned data/analysis data/trait_data_small.rds")
 
 #analysis_data <- readRDS("trait_data_small.rds")
 
-mean_params <- read.csv("../output/mean parameter table vianna july 8 2022.csv")
+mean_params <- read.csv("../output/mean parameter table viannia july 8 2022.csv")
 #mean_params <- read.csv("mean parameter table leishmania july 8 2022.csv")
 
 #------------------------------------------------------#
@@ -84,8 +84,8 @@ for(i in 1:100){
 }
 
 names(means_df) <- c("mean_shap_score", "Feature", "iter")
-write.csv(means_df, "../output/shapley variable importance vianna july 21 2022.csv")
-write.csv(dependence_df, "../output/shapley dependence vianna july 21 2022.csv")
+write.csv(means_df, "../output/shapley variable importance viannia july 21 2022.csv")
+write.csv(dependence_df, "../output/shapley dependence viannia july 21 2022.csv")
 
 #######
 #aggregate per group of features for each iteration
@@ -293,8 +293,8 @@ table(new_hosts$MSW05_Order)
 # 
 # #names(cv_predictions_5x) <- c('MSW05_Binomial', 'predicted_probability')
 # #cv_predictions_5x <- merge(cv_predictions_5x, analysis_data[,c('leish.infection','MSW05_Binomial')])
-# write.csv(cv_predictions_5x, "../output/july 1 vianna bootstrap predictions.csv")
-# write.csv(pd_df_iter, "../output/july 1 vianna bootstrap pdp prob to use.csv")
+# write.csv(cv_predictions_5x, "../output/july 1 viannia bootstrap predictions.csv")
+# write.csv(pd_df_iter, "../output/july 1 viannia bootstrap pdp prob to use.csv")
 # 
 # 
 # ##plot pdp
@@ -534,7 +534,7 @@ for(i in 1:10){
   
 }
 
-write.csv(importance_all, "../output/permutation variable importance vianna july 11 2022.csv")
+write.csv(importance_all, "../output/permutation variable importance viannia july 11 2022.csv")
 
 # #get top variables for pdp plots
 # mean_importance <- aggregate(Gain ~ Feature, data = importance_all, 
@@ -547,7 +547,7 @@ write.csv(importance_all, "../output/permutation variable importance vianna july
 #                                                  se = sd(x)/length(x)))
 #                              
 # mean_importance <- do.call(data.frame,mean_importance)
-# write.csv(mean_importance, "../output/bootstrap mean variable importance vianna july 1 2022.csv")
+# write.csv(mean_importance, "../output/bootstrap mean variable importance viannia july 1 2022.csv")
 # 
 # ##get mean of categorical variables: pc_land, habitat, diet, activity, strata, order, phylogenetic
 # 
@@ -578,7 +578,7 @@ write.csv(importance_all, "../output/permutation variable importance vianna july
 # 
 # mean_importance <- mean_importance[!mean_importance$Feature %in% drop_traits, ]
 # 
-# write.csv(mean_importance, "../output/bootstrap sum mean variable importance vianna july 1 2022.csv")
+# write.csv(mean_importance, "../output/bootstrap sum mean variable importance viannia july 1 2022.csv")
 # 
 # imp_df <- mean_importance[1:10,]
 # importance_plot_all <- ggplot(imp_df, aes(x = reorder(Feature, Gain.mean.mean), y = Gain.mean.mean)) +
