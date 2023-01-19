@@ -7,8 +7,8 @@ This github contains the following R files (for each *Leishmania* genus:
 1. timetree_phylo_distance.R: code to get phylogenetic distance PCoA axes
 2. pubmed_data_collection.R: code to build variable importance plots and tables for each model in the manuscript
 3. clean_merge_data_4.1.R : code to clean and merge host status data and trait data included in the raw_data folder
-4. species_range_xgboost_model_performance.R : codel to evaluate model performance using nested cross-validation
-5. range_variableImp_pdp.R: code to bootstrap variable importance and partial dependence plot analysis
+4. xgboost_model_performance.R : codel to evaluate model performance using nested cross-validation
+5. variableImp_pdp.R: code to bootstrap variable importance and partial dependence plot analysis
 6. figures.R : code to generate figures for final model
  
  *The folder study_effort_supp includes the same analyses but for the supplemental study effort analysis*
