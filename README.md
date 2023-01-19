@@ -25,5 +25,11 @@ The final data included in the analysis (cleaned_data/analysis_data/trait_data_s
 * Zoonotic host status: GIDEON https://www.gideononline.com/
  
  Species range shapefiles for cleaning data, building figures, and aggregating habitat traits for species ranges can be found here: https://www.iucnredlist.org/
- \n Occurrence points to generate polygons for invasive species in the Americas were downloaded from da Rosa et al. 2020:  https://doi.org/10.1002/ecy.3115
- \n Occurrence points to generate polygons for zoonotic *Leishmania* occurrence were downloaded from Herrera et al. 2020: https://doi.org/10.1038/s41597-020-0451-5
+ 
+ \n 
+ 
+ Occurrence points to generate polygons for invasive species in the Americas were downloaded from da Rosa et al. 2020:  https://doi.org/10.1002/ecy.3115
+
+\n 
+
+Occurrence points to generate polygons for zoonotic *Leishmania* occurrence were downloaded from Herrera et al. 2020: https://doi.org/10.1038/s41597-020-0451-5
