@@ -10,6 +10,7 @@ This github contains the following R files (for each *Leishmania* genus:
 4. species_range_xgboost_model_performance.R : codel to evaluate model performance using nested cross-validation
 5. range_variableImp_pdp.R: code to bootstrap variable importance and partial dependence plot analysis
 6. figures.R : code to generate figures for final model
+ 
  *The folder study_effort_supp includes the same analyses but for the supplemental study effort analysis*
 
 The final data included in the analysis (cleaned_data/analysis_data/trait_data_small.rds) includes data from the following sources: 
