@@ -1,8 +1,8 @@
 # leish_hosts
-> Code for: *Phylogenetic and biogeographical traits predict unrecognized hosts of zoonotic leishmaniasis* 2023. Caroline K Glidden, Aisling R. Murran, Rafaella Albuquerque Silva, Adrian A. Castellanos,  Barbara A. Han, Erin A. Mordecai. *PLoS NTD*: in Reiviion. (preprint : https://www.biorxiv.org/content/10.1101/2022.10.11.511693v2)
+> Code for: *Phylogenetic and biogeographical traits predict unrecognized hosts of zoonotic leishmaniasis* 2023. Caroline K Glidden, Aisling R. Murran, Rafaella Albuquerque Silva, Adrian A. Castellanos,  Barbara A. Han, Erin A. Mordecai. *PLoS NTD*: https://doi.org/10.1371/journal.pntd.0010879
 > Code written by Caroline K. Glidden & Aisling R. Murran
 
-This github contains the following R files (for each *Leishmania* genus:
+This github contains the following R files (for each *Leishmania* genus):
 
 1. timetree_phylo_distance.R: code to get phylogenetic distance PCoA axes
 2. pubmed_data_collection.R: code to build variable importance plots and tables for each model in the manuscript
