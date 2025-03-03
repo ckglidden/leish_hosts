@@ -210,16 +210,6 @@ new_host_summary <- cowplot::plot_grid(vianna_ab_bar, combined_rel_bar, leish_ab
 ggsave("/Users/carolineglidden/Desktop/reservoir hosts - FINAL/new_host_summary.pdf", new_host_summary, dpi=600)
 ggsave("/Users/carolineglidden/Desktop/reservoir hosts - FINAL/new_prop_host_summary.pdf", combined_rel_bar, dpi=600)
 
-
-
-
-
-
-
-###########
-##figure 4: host ranges
-###########
-
 ###################
 ##figure 5 host locations
 ###################
